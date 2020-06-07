@@ -17,6 +17,7 @@ SEARCH_TAG_LIST = ['original_publication_year', 'original_publication_month',
                    "name", "image_url", "small_image_url"]
 
 BONSAI_URL = "https://m4298xjdus:mhavgiv2ll@twitter-kafka-1036075227.us-west-2.bonsaisearch.net:443"
+LOCAL_URL = "http://localhost:9200"
 
 KEY = "OviLS6XbejobFRKgB5SRg"
 BASE_URL = "https://www.goodreads.com/search/index.xml"
@@ -89,11 +90,14 @@ def getES(env = 'local'):
 
 def create_data_dump():
     SAMPLE_QUERY = ["potter", "sharma", "amish", "pie"]
-    es = getES('dev')
+    es = getES('local')
     for i in SAMPLE_QUERY:
         for j in search_by_query(i):
-            j["base64"] = getbase64('file.pdf')
-            res = es.index(index='books_dummy', doc_type='book', body=j)
+            j["download_link"] = "https://github.com/MrAlex6204/Books/raw/master/Django.pdf"
+            j["tags"] = []
+            pprint.pprint(j)
+            # j["base64"] = getbase64('file.pdf')
+            res = es.index(index='kk_bok_1', doc_type='book', body=j)
             print(res['result'])
 
 
